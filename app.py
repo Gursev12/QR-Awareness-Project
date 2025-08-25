@@ -1,38 +1,26 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import qrcode
-import os
+import io
+import base64
 
 app = Flask(__name__)
 
-# Folder jithe QR codes save honge
-QR_FOLDER = "static/qr_codes"
-os.makedirs(QR_FOLDER, exist_ok=True)
-
-
 @app.route("/", methods=["GET", "POST"])
-def home():
-    qr_img_path = None
+def index():
+    qr_code = None
     if request.method == "POST":
-        user_input = request.form["data"]
+        url = request.form.get("url")
+        if url:
+            # Generate QR code
+            qr = qrcode.make(url)
+            img_io = io.BytesIO()
+            qr.save(img_io, 'PNG')
+            img_io.seek(0)
 
-        # Awareness URL da demo
-        if user_input.strip() == "":
-            user_input = "https://your-awareness-demo.com"
+            # Convert image to base64 string for display in HTML
+            qr_code = base64.b64encode(img_io.getvalue()).decode('utf-8')
 
-        # QR Code generate karna
-        qr = qrcode.make(user_input)
-        qr_img_path = os.path.join(QR_FOLDER, "qr_demo.png")
-        qr.save(qr_img_path)
-
-        qr_img_path = "/" + qr_img_path  # for HTML render
-
-    return render_template("index.html", qr_img_path=qr_img_path)
-
-
-@app.route("/awareness")
-def awareness():
-    return "<h2 style='color:red;'>⚠️ Beware! QR codes can be misused for phishing. This is only a demo for educational purposes.</h2>"
-
+    return render_template("index.html", qr_code=qr_code)
 
 if __name__ == "__main__":
     app.run(debug=True)
