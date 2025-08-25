@@ -3,14 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>QR Awareness Project</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h1>🚀 Welcome to QR Awareness Project</h1>
-  <form action="/generate" method="post">
-    <label>Enter a URL to generate QR:</label><br><br>
-    <input type="text" name="url" placeholder="https://example.com" required>
-    <button type="submit">Generate QR</button>
-  </form>
+  <div class="container">
+    <h1>🚀 QR Awareness Project</h1>
+    <p>Enter any URL below and generate its QR Code instantly.</p>
+
+    <form method="post">
+      <input type="text" name="url" placeholder="https://example.com" required>
+      <button type="submit">Generate QR</button>
+    </form>
+
+    {% if qr_code %}
+      <div class="qr-result">
+        <h2>✅ Your QR Code:</h2>
+        <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+      </div>
+    {% endif %}
+  </div>
 </body>
 </html>
-
