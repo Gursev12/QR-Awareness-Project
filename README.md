@@ -1,3 +1,4 @@
+<img width="1536" height="1024" alt="ChatGPT Image Aug 25, 2025, 10_14_47 AM" src="https://github.com/user-attachments/assets/78ecc75a-07e4-4c93-8eb2-c7c35690d84e" />
 # 📢 QR Awareness Project
 
 ⚠️ **Educational Purpose Only**
