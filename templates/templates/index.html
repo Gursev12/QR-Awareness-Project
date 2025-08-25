@@ -19,6 +19,10 @@
       <div class="qr-result">
         <h2>✅ Your QR Code:</h2>
         <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+        <br><br>
+        <a href="data:image/png;base64,{{ qr_data }}" download="qr_code.png">
+          <button class="download-btn">⬇ Download QR Code</button>
+        </a>
       </div>
     {% endif %}
   </div>
